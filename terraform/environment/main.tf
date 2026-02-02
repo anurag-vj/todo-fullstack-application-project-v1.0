@@ -28,3 +28,27 @@ module "subnet" {
   resource_group_name  = module.resource_group.resource_group_ids.name
   address_prefixes     = each.value.address_prefixes
 }
+
+module "network_security_group" {
+  source = "../modules/azurerm_network_security"
+
+  for_each = var.network_security_group
+
+  network_security_group_name = replace(each.value.name, "$${local.name_pattern}", local.name_pattern)
+  location                    = local.location
+  resource_group_name         = module.resource_group.resource_group_ids.name
+  security_rule = {
+    for security_rule in each.value.security_rule :
+    "allow-${security_rule}" => {
+      name                       = "Allow-${security_rule}"
+      priority                   = ceil((security_rule % 9) + 100)
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = security_rule
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    }
+  }
+}

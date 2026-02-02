@@ -15,3 +15,10 @@ variable "subnets" {
     address_prefixes = list(string)
   }))
 }
+
+variable "network_security_group" {
+  type = map(object({
+    name          = string
+    security_rule = list(string)
+  }))
+}
