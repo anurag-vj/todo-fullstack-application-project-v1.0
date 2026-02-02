@@ -1,3 +1,5 @@
+address_space = ["10.10.10.0/24"]
+
 subnets = {
   fe-subnet = {
     name             = "$${local.name_pattern}-frontend-subnet"
@@ -28,5 +30,16 @@ subnet_nsg = {
   "be-subnet-be-nsg" = {
     subnet_key = "be-subnet"
     nsg_key    = "be-nsg"
+  }
+}
+
+public_ip = {
+  "fe-pip" = {
+    name              = "$${local.name_pattern}-frontend-pip"
+    allocation_method = "Dynamic"
+  }
+  "be-pip" = {
+    name              = "$${local.name_pattern}-backend-pip"
+    allocation_method = "Dynamic"
   }
 }

@@ -62,3 +62,16 @@ module "subnet_nsg" {
   subnet_id                 = module.subnet[each.value.subnet_key].subnet_ids.id
   network_security_group_id = module.network_security_group[each.value.nsg_key].network_security_group_ids.id
 }
+
+module "public_ip" {
+  source = "../modules/azurerm_public_ip"
+
+  for_each = var.public_ip
+
+  public_ip_name      = replace(each.value.name, "$${local.name_pattern}", local.name_pattern)
+  location            = local.location
+  resource_group_name = module.resource_group.resource_group_ids.name
+  allocation_method   = each.value.allocation_method
+
+  tags = local.common_tags
+}

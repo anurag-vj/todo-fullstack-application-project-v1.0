@@ -5,8 +5,7 @@ variable "subscription_id" {
 }
 
 variable "address_space" {
-  type    = list(string)
-  default = ["10.10.10.0/24"]
+  type = list(string)
 }
 
 variable "subnets" {
@@ -27,5 +26,12 @@ variable "subnet_nsg" {
   type = map(object({
     subnet_key = string
     nsg_key    = string
+  }))
+}
+
+variable "public_ip" {
+  type = map(object({
+    name              = string
+    allocation_method = string
   }))
 }
