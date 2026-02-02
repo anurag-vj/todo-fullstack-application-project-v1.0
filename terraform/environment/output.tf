@@ -17,3 +17,9 @@ output "network_security_group_ids" {
     for key, module in module.network_security_group : key => module.network_security_group_ids
   }
 }
+
+output "subnet_nsg_ids" {
+  value = {
+    for key, module in module.subnet_nsg : key => module.subnet_nsg_ids
+  }
+}

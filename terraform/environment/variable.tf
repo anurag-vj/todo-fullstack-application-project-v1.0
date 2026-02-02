@@ -22,3 +22,10 @@ variable "network_security_group" {
     security_rule = list(string)
   }))
 }
+
+variable "subnet_nsg" {
+  type = map(object({
+    subnet_key = string
+    nsg_key    = string
+  }))
+}

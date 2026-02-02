@@ -19,3 +19,14 @@ network_security_group = {
     security_rule = ["22", "8000"]
   }
 }
+
+subnet_nsg = {
+  "fe-subet-fe-nsg" = {
+    subnet_key = "fe-subnet"
+    nsg_key    = "fe-nsg"
+  }
+  "be-subnet-be-nsg" = {
+    subnet_key = "be-subnet"
+    nsg_key    = "be-nsg"
+  }
+}

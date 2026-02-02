@@ -51,4 +51,14 @@ module "network_security_group" {
       destination_address_prefix = "*"
     }
   }
+  tags = local.common_tags
+}
+
+module "subnet_nsg" {
+  source = "../modules/azurerm_subnet_nsg_association"
+
+  for_each = var.subnet_nsg
+
+  subnet_id                 = module.subnet[each.value.subnet_key].subnet_ids.id
+  network_security_group_id = module.network_security_group[each.value.nsg_key].network_security_group_ids.id
 }
