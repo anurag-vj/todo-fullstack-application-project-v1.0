@@ -8,3 +8,10 @@ variable "address_space" {
   type    = list(string)
   default = ["10.10.10.0/24"]
 }
+
+variable "subnets" {
+  type = map(object({
+    name             = string
+    address_prefixes = list(string)
+  }))
+}
