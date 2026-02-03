@@ -88,3 +88,31 @@ module "network_interface" {
   private_ip_address_allocation = each.value.public_ip_address_allocation
   public_ip_address_id          = each.value.public_ip_address ? module.public_ip[each.value.public_ip_key].public_ip_ids.id : null
 }
+
+module "linux_virtual_machine" {
+  source = "../modules/azurerm_linux_virtual_machine"
+
+  for_each = var.linux_virtual_machine
+
+  virtual_machine_name  = replace(each.value.name, "$${local.name_prefix}", local.name_prefix)
+  location              = local.location
+  resource_group_name   = module.resource_group.resource_group_ids.name
+  size                  = each.value.size
+  admin_username        = data.azurerm_key_vault_secret.username.value
+  admin_password        = data.azurerm_key_vault_secret.password.value
+  network_interface_ids = [module.network_interface[each.value.network_interface_key].network_interface_ids.id]
+
+  os_disk = {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference = {
+    publisher = "Canonical"
+    offer     = each.value.offer
+    sku       = each.value.sku
+    version   = "latest"
+  }
+
+  tags = local.common_tags
+}

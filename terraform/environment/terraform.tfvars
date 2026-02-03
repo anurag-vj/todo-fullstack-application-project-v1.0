@@ -60,3 +60,20 @@ network_interface = {
     public_ip_key                = "be-pip"
   }
 }
+
+linux_virtual_machine = {
+  "fe-vm" = {
+    name                  = "$${local.name_prefix}-frontend-vm"
+    size                  = "Standard_B2s"
+    network_interface_key = "fe-nic"
+    offer                 = "0001-com-ubuntu-server-jammy"
+    sku                   = "22_04-LTS"
+  }
+  "be-vm" = {
+    name                  = "$${local.name_prefix}-backend-vm"
+    size                  = "Standard_B2s"
+    network_interface_key = "be-nic"
+    offer                 = "0001-com-ubuntu-server-focal"
+    sku                   = "20_04-LTS"
+  }
+}

@@ -45,3 +45,13 @@ variable "network_interface" {
     public_ip_key                = optional(string)
   }))
 }
+
+variable "linux_virtual_machine" {
+  type = map(object({
+    name                  = string
+    size                  = string
+    network_interface_key = string
+    offer                 = string
+    sku                   = string
+  }))
+}

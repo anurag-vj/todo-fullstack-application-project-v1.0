@@ -35,3 +35,9 @@ output "network_interface_ids" {
     for key, module in module.network_interface : key => module.network_interface_ids
   }
 }
+
+output "virtual_machine_ids" {
+  value = {
+    for key, module in module.linux_virtual_machine : key => module.virtual_machine_ids
+  }
+}
