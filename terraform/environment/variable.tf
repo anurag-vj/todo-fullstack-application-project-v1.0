@@ -5,7 +5,8 @@ variable "subscription_id" {
 }
 
 variable "address_space" {
-  type = list(string)
+  type    = list(string)
+  default = ["10.10.10.0/24"]
 }
 
 variable "subnets" {
@@ -54,4 +55,9 @@ variable "linux_virtual_machine" {
     offer                 = string
     sku                   = string
   }))
+}
+
+variable "mssql_server_version" {
+  type    = string
+  default = "12.0"
 }

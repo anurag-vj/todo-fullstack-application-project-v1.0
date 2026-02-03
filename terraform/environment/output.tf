@@ -41,3 +41,7 @@ output "virtual_machine_ids" {
     for key, module in module.linux_virtual_machine : key => module.virtual_machine_ids
   }
 }
+
+output "mssql_server_ids" {
+  value = module.mssql_server.mssql_server_ids
+}

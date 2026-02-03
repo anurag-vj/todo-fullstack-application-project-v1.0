@@ -51,6 +51,7 @@ module "network_security_group" {
       destination_address_prefix = "*"
     }
   }
+
   tags = local.common_tags
 }
 
@@ -87,6 +88,8 @@ module "network_interface" {
   subnet_id                     = module.subnet[each.value.subnet_key].subnet_ids.id
   private_ip_address_allocation = each.value.public_ip_address_allocation
   public_ip_address_id          = each.value.public_ip_address ? module.public_ip[each.value.public_ip_key].public_ip_ids.id : null
+
+  tags = local.common_tags
 }
 
 module "linux_virtual_machine" {
@@ -113,6 +116,19 @@ module "linux_virtual_machine" {
     sku       = each.value.sku
     version   = "latest"
   }
+
+  tags = local.common_tags
+}
+
+module "mssql_server" {
+  source = "../modules/azurerm_mssql_server"
+
+  mssql_server_name            = "${local.name_prefix}-mssql-server"
+  location                     = local.location
+  resource_group_name          = module.resource_group.resource_group_ids.name
+  mssql_server_version         = var.mssql_server_version
+  administrator_login          = data.azurerm_key_vault_secret.username.value
+  administrator_login_password = data.azurerm_key_vault_secret.password.value
 
   tags = local.common_tags
 }

@@ -1,5 +1,3 @@
-address_space = ["10.10.10.0/24"]
-
 subnets = {
   "fe-subnet" = {
     name             = "$${local.name_prefix}-frontend-subnet"
