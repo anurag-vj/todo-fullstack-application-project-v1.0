@@ -26,6 +26,12 @@ output "subnet_nsg_ids" {
 
 output "pubic_ip_ids" {
   value = {
-    for key, module in module.public_ip : key => module.pubic_ip_ids
+    for key, module in module.public_ip : key => module.public_ip_ids
+  }
+}
+
+output "network_interface_ids" {
+  value = {
+    for key, module in module.network_interface : key => module.network_interface_ids
   }
 }

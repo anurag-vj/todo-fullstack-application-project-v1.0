@@ -35,3 +35,13 @@ variable "public_ip" {
     allocation_method = string
   }))
 }
+
+variable "network_interface" {
+  type = map(object({
+    name                         = string
+    subnet_key                   = string
+    public_ip_address_allocation = string
+    public_ip_address            = bool
+    public_ip_key                = optional(string)
+  }))
+}
