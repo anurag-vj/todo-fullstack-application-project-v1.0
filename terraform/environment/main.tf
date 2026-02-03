@@ -132,3 +132,12 @@ module "mssql_server" {
 
   tags = local.common_tags
 }
+
+module "mssql_database" {
+  source = "../modules/azurerm_mssql_database"
+
+  mssql_database_name = "${local.name_prefix}-mssql-db"
+  server_id           = module.mssql_server.mssql_server_ids.id
+
+  tags = local.common_tags
+}
